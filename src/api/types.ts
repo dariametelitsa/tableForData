@@ -30,5 +30,5 @@ export type CharacterListResponse = {
     next: Nullable<string>
     prev: Nullable<string>
   }
-  result: CharacterListDTO
+  results: CharacterListDTO
 }
