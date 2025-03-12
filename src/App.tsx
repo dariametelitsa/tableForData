@@ -1,8 +1,11 @@
 import { ThemeProvider } from './hooks/useTheme.tsx';
 import Layout from '@components/layout/Layout.tsx';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { Table } from '@/entity/table';
 import { queryClient } from '@/api/query-client.ts';
+import React, { Suspense } from 'React';
+import { CircularProgress } from '@mui/material';
+
+const Table = React.lazy(() => import('./entity/table/Table.tsx'));
 
 function App() {
 
@@ -10,7 +13,9 @@ function App() {
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <Layout>
-            <Table/>
+            <Suspense fallback={<CircularProgress color="success" />}>
+              <Table />
+            </Suspense>
           </Layout>
         </QueryClientProvider>
       </ThemeProvider>

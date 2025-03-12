@@ -7,7 +7,7 @@ import FemaleIcon from '@mui/icons-material/Female';
 import TransgenderIcon from '@mui/icons-material/Transgender';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
-export const Table = () => {
+const Table = () => {
 
   const {onResetSettings, onFilterChange, onSortChange, handleCloseModal, handleImageClick, rows,
     sortModel, filterModel, isLoading, selectedImage, openModal, characterList} = useTable()
@@ -173,3 +173,5 @@ export const Table = () => {
     </Box>
   )
 }
+
+export default Table
