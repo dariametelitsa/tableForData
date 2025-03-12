@@ -2,7 +2,7 @@ import { ThemeProvider } from './hooks/useTheme.tsx';
 import Layout from '@components/layout/Layout.tsx';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/api/query-client.ts';
-import React, { Suspense } from 'React';
+import React, { Suspense } from 'react';
 import { CircularProgress } from '@mui/material';
 
 const Table = React.lazy(() => import('./entity/table/Table.tsx'));

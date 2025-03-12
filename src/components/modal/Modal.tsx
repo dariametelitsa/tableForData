@@ -1,4 +1,4 @@
-import { Box, Modal as MUIModal } from '@mui/material';
+import { Box, Modal as MUIModal, useTheme  } from '@mui/material';
 
 type Props = {
   openModal: boolean
@@ -7,6 +7,8 @@ type Props = {
 }
 
 export const Modal = ({openModal, handleCloseModal, selectedImage}: Props) => {
+  const theme = useTheme();
+
   return (
     <MUIModal open={openModal} onClose={handleCloseModal}>
       <Box
@@ -17,7 +19,7 @@ export const Modal = ({openModal, handleCloseModal, selectedImage}: Props) => {
           transform: 'translate(-50%, -50%)',
           width: '50%',
           height: '70%',
-          backgroundColor: 'white',
+          backgroundColor: theme.palette.background.default,
           borderRadius: 2,
           boxShadow: 24,
           padding: 2,
