@@ -1,6 +1,6 @@
 import { ThemeProvider } from './hooks/useTheme.tsx';
 import Layout from '@components/layout/Layout.tsx';
-import { Table } from '@components/Table';
+import { Table } from '@components/table';
 
 function App() {
 

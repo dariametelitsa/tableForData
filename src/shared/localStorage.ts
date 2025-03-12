@@ -1,4 +1,4 @@
-type Key = 'sort' | 'filters' | 'theme'
+type Key = 'sort' | 'filter' | 'theme'
 
 export const setToLocalStorage = (key: Key, value: string) => {
   localStorage.setItem(key, value)

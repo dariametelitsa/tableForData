@@ -14,6 +14,7 @@ export const Header = () => {
           </Typography>
           <Button
             variant="contained"
+            color={'secondary'}
             onClick={() => toggleTheme()}
           >
             Switch theme

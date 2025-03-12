@@ -22,6 +22,10 @@ const colors = {
     text: {
       primary: "#2E7D32",
       secondary: "#558B2F",
+      tertiary: "#4CAF50",
+      disabled: "#A5D6A7",
+      link: "#388E3C",
+      heading: "#1B5E20",
     },
   },
   darkMode: {
@@ -32,6 +36,10 @@ const colors = {
     text: {
       primary: "#C8E6C9",
       secondary: "#A5D6A7",
+      tertiary: "#81C784",
+      disabled: "#607D8B",
+      link: "#81C784",
+      heading: "#A5D6A7",
     },
   },
 };
