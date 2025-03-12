@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react';
-import { apiData } from '@/api/api.ts';
-import { CharacterListDTO } from '@/api/types.ts';
-import { Box, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box, Button, Typography } from '@mui/material';
 import { DataGrid, GridCellParams, GridFilterModel, GridSortModel, GridToolbar } from '@mui/x-data-grid';
 import { Modal } from '@components/modal/Modal.tsx';
-import { getFromLocalStorage, setToLocalStorage } from '@shared/localStorage.ts';
+import { getFromLocalStorage, removeFromLocalStorage, setToLocalStorage } from '@shared/localStorage.ts';
+import { useCharacters } from '@/entity/table/useCharacters.ts';
 
 export const Table = () => {
-  const [characters, setCharacters] = useState<CharacterListDTO>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const sortFromStorage = getFromLocalStorage('sort')
   const filterFromStorage = getFromLocalStorage('filter')
+  const {characterList, isLoading, error} = useCharacters()
 
   const sortData = sortFromStorage
     ? JSON.parse(sortFromStorage)
@@ -27,25 +26,17 @@ export const Table = () => {
 
   const [sortModel, setSortModel] = useState<GridSortModel>(sortData);
   const [filterModel, setFilterModel] = useState<GridFilterModel>(filterData);
-  console.log(filterModel);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await apiData.getCharacterList();
-        setCharacters(data);
-      } catch (error) {
-        console.error('Error fetching character list:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  if (isLoading) {
+    return <Typography variant="h6">Loading...</Typography>
+  }
 
-    fetchData();
-  }, []);
+  if(!characterList) {
+    return <Typography variant="h6">Empty data</Typography>
+  }
 
-  if (loading) {
-    return <Typography variant="h6">Loading...</Typography>;
+  if(error) {
+    return <Typography variant="h6">Error in fetching data, try again</Typography>
   }
 
   const columns = [
@@ -129,7 +120,7 @@ export const Table = () => {
     },
   ];
 
-  const rows = characters.map((character) => ({
+  const rows = characterList.map((character) => ({
     id: character.id,
     image: character.image,
     name: character.name,
@@ -158,36 +149,44 @@ export const Table = () => {
     setFilterModel(newFilterModel)
   }
 
+  const onResetSettings = () => {
+    removeFromLocalStorage('filter')
+    removeFromLocalStorage('sort')
+    setSortModel([])
+    setFilterModel({items: []})
+  }
+
   return (
     <Box sx={{ width: '100%', marginTop: 2 }}>
       <Typography variant="h4" gutterBottom>
         Character List
       </Typography>
-        <DataGrid
-          rows={rows}
-          columns={[...columns]}
-          getRowHeight={() => 'auto'}
-          getEstimatedRowHeight={() => 300}
-          slots={{
-            toolbar: GridToolbar,
-          }}
-          checkboxSelection
-          sx={{
-            '.MuiDataGrid-cell': {
-              maxHeight: '300px',
-              minHeight: '100px',
-              overflow: 'scroll',
-              height: 'auto',
-              display: 'flex',
-              alignItems: 'center'
-            },
-          }}
-          sortModel={sortModel}
-          onSortModelChange={onSortChange}
-          filterModel={filterModel}
-          onFilterModelChange={onFilterChange}
-        />
+      <Button onClick={onResetSettings}>Reset settings</Button>
 
+      <DataGrid
+        rows={rows}
+        columns={[...columns]}
+        getRowHeight={() => 'auto'}
+        getEstimatedRowHeight={() => 300}
+        slots={{
+          toolbar: GridToolbar,
+        }}
+        checkboxSelection
+        sx={{
+          '.MuiDataGrid-cell': {
+            maxHeight: '300px',
+            minHeight: '100px',
+            overflow: 'scroll',
+            height: 'auto',
+            display: 'flex',
+            alignItems: 'center'
+          },
+        }}
+        sortModel={sortModel}
+        onSortModelChange={onSortChange}
+        filterModel={filterModel}
+        onFilterModelChange={onFilterChange}
+      />
         <Modal handleCloseModal={handleCloseModal} openModal={openModal} selectedImage={selectedImage} />
     </Box>
   )

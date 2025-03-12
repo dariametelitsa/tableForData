@@ -1,17 +1,41 @@
-import { instance } from '../shared/instance.ts';
 import { CharacterDTO, CharacterListResponse } from './types.ts';
-import { AxiosResponse } from 'axios';
 
-class ApiData {
-  getCharacterList() {
-    return instance.get<CharacterListResponse>('/character').then(res => {
-      return res.data.results
-    })
-  }
+import { queryOptions } from '@tanstack/react-query';
 
-  getCharacter(id: string) {
-    return instance.get<AxiosResponse<CharacterDTO>>(`/character/${id}`)
-  }
+export const apiData = {
+  baseKey: 'https://rickandmortyapi.com/api',
+
+  getCharacterList: () => {
+    return queryOptions({
+      queryKey: [apiData.baseKey, 'characters'],
+      queryFn: async (meta): Promise<CharacterListResponse> => {
+        const response = await fetch(`${apiData.baseKey}/character`, {
+          signal: meta.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch characters');
+        }
+        return await response.json();
+      },
+    });
+  },
+
+  getCharacter: (id: string) => {
+    return queryOptions({
+      queryKey: [apiData.baseKey, 'character'],
+      queryFn: async (meta): Promise<CharacterDTO> => {
+        const response = await fetch(`${apiData.baseKey}/character/${id}`, {
+          signal: meta.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch characters');
+        }
+        return await response.json();
+      },
+    });
+  },
 }
 
-export const apiData = new ApiData()
+
