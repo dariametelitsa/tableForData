@@ -1,5 +1,5 @@
 import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/material';
-import { useThemeContext } from '../../hooks/useTheme.tsx';
+import { useThemeContext } from '@hooks/useThemeContext.ts';
 
 export const Header = () => {
   const {toggleTheme} = useThemeContext()
@@ -10,13 +10,13 @@ export const Header = () => {
         <Container>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Данные о персонажах
+            Characters
           </Typography>
           <Button
             variant="contained"
             onClick={() => toggleTheme()}
           >
-            Переключить тему
+            Switch theme
           </Button>
         </Toolbar>
         </Container>

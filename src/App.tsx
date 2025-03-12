@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
-import Layout from './components/layout/Layout.tsx';
 import { ThemeProvider } from './hooks/useTheme.tsx';
+import Layout from '@components/layout/Layout.tsx';
 
 function App() {
 

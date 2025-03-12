@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
 import * as React from 'react';
-import { Header } from '../header/Header.tsx';
+import { Header } from '@components/header';
 
 const Layout = ({ children }: {children: React.ReactNode}) => {
   return (
