@@ -28,6 +28,7 @@ export const useTable = () => {
     id: character.id,
     image: character.image,
     name: character.name,
+    gender: character.gender,
     status: character.status,
     created: character.created,
     episodeCount: character.episode.length,

@@ -2,12 +2,16 @@ import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { DataGrid, GridCellParams, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { Modal } from '@components/modal/Modal.tsx';
 import { useTable } from '@/entity/table/useTable.ts';
+import MaleIcon from '@mui/icons-material/Male';
+import FemaleIcon from '@mui/icons-material/Female';
+import TransgenderIcon from '@mui/icons-material/Transgender';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+
 export const Table = () => {
 
   const {onResetSettings, onFilterChange, onSortChange, handleCloseModal, handleImageClick, rows,
     sortModel, filterModel, isLoading, selectedImage, openModal, characterList} = useTable()
 
-  console.log(characterList);
   if (isLoading) {
     return <CircularProgress color="success" />
   }
@@ -20,7 +24,7 @@ export const Table = () => {
     { field: 'id',
       type: 'number',
       headerName: 'ID',
-      width: 90,
+      width: 50,
       sortable: true,
       renderCell: (params: GridCellParams) => (
         <Typography
@@ -50,7 +54,7 @@ export const Table = () => {
       field: 'name',
       headerName: 'Name',
       type: 'string',
-      width: 200,
+      width: 250,
       sortable: true,
       filterable: true,
       renderCell: (params: GridCellParams) => (
@@ -62,14 +66,42 @@ export const Table = () => {
       ),
     },
     {
+      field: 'gender',
+      headerName: 'Gender',
+      type: 'singleSelect',
+      valueOptions: ['Female', 'Male', 'Genderless', 'unknown'],
+      width: 100,
+      filterable: true,
+      renderCell: (params: GridCellParams) => (
+        <>
+          {params.value === 'Female'
+            ? <FemaleIcon/>
+            : params.value === 'Male'
+            ? <MaleIcon/>
+              : params.value === 'Genderless'
+            ? <TransgenderIcon/>
+                : <QuestionMarkIcon/>
+
+          }
+        </>
+      ),
+    },
+    {
       field: 'status',
       headerName: 'Status',
-      type: 'string',
-      width: 150,
+      type: 'singleSelect',
+      valueOptions: ['Alive', 'Dead', 'unknown'],
+      width: 120,
       filterable: true,
       renderCell: (params: GridCellParams) => (
         <Typography
-          color={'warning'}
+          color={
+            params.value === 'Alive'
+              ? 'primary'
+              : params.value === 'Dead'
+                ? 'error'
+                : 'textDisabled'
+          }
           sx={{fontFamily: 'Verdana' }}>
           {params.value as string}
         </Typography>
@@ -79,12 +111,12 @@ export const Table = () => {
       field: 'created',
       headerName: 'Created',
       type: 'date',
-      width: 200,
+      width: 120,
       sortable: true,
       valueGetter: (params: string) => new Date(params),
       renderCell: (params: GridCellParams) => (
         <Typography
-          color={'textDisabled'}
+          color={'textSecondary'}
           sx={{ fontStyle: 'italic' }}>
           {new Date(params.value as string).toLocaleDateString()}
         </Typography>
@@ -94,7 +126,7 @@ export const Table = () => {
       field: 'episodeCount',
       headerName: 'Episodes Count',
       type: 'number',
-      width: 180,
+      width: 150,
       sortable: true,
       renderCell: (params: GridCellParams) => (
         <Typography
@@ -122,13 +154,14 @@ export const Table = () => {
           toolbar: GridToolbar,
         }}
         sx={{
+          paddingTop: '10px',
           '.MuiDataGrid-cell': {
             maxHeight: '300px',
             minHeight: '100px',
             overflow: 'scroll',
             height: 'auto',
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
           },
         }}
         sortModel={sortModel}
