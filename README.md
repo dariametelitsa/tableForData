@@ -1,54 +1,87 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a web application for exploring character data from the "Rick and Morty" series. The data is fetched from the public Rick and Morty API. Built with modern frontend technologies, the app includes features like data sorting, filtering, theme switching, and modal windows for image previews.
 
-Currently, two official plugins are available:
+## Installation and Setup
+### Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    Node.js installed (recommended version: 18.x or higher).
+    pnpm installed (npm install -g pnpm).
 
-## Expanding the ESLint configuration
+## Instructions
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone the repository:
+```sh
+    git clone <repository_URL>
+    cd <folder_name>
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+2. Install dependencies:
+```sh
+    pnpm install
 ```
+
+3. Run the project in development mode:
+
+```sh
+    pnpm dev
+```
+The app will be available at http://localhost:5173 (or another port specified in the console).
+
+4. Build for production:
+```sh
+    pnpm build
+```
+
+## Project Structure
+```
+├── src/
+│   ├── components/   # React components
+│   ├── hooks/        # Custom hooks
+│   ├── api/          # API requests and TanStack Query setup
+│   ├── entity/       # Main app entity
+│   ├── shared/       # Common data for project
+│   └── App.tsx       # Main application component
+├── public/           # Static files
+└── package.json      # Dependency and script configuration
+```
+
+### Technologies Used:
+
+**pnpm** — Package manager for fast and efficient dependency management.
+
+**Vite** — Build tool and development server with fast Hot Module Replacement (HMR).
+
+**TypeScript** — Static typing for improved code reliability.
+
+**React** — Library for building user interfaces.
+
+**TanStack Query** — Asynchronous data management and API request caching.
+
+**Material-UI (MUI)** — Component library for a modern UI, including the DataGrid component.
+
+### Features
+
+**API Data**: Characters are loaded from the public Rick and Morty API.
+
+**Light and Dark Themes**: Theme switching is available in the app header.
+
+**Data Table**: Uses MUI’s DataGrid component with sorting and filtering support.
+
+**Modal Windows**: Clicking a character’s image opens a modal with an enlarged version.
+
+
+## Additional Features
+
+1. **Sorting and Filtering**: Implemented via DataGrid for efficient data handling.
+2. **Data Caching**: TanStack Query optimizes API requests and reduces load times.
+
+## Demo
+
+Check out the live demo here: <demo_url>.
+### Usage Example
+
+Open the app in your browser.
+Switch between light and dark themes using the header toggle.
+Browse the character table, sort, or filter the data.
+Click a character’s image to view it in a modal window.
