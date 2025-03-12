@@ -44,5 +44,5 @@ export const getTheme = (mode: ThemeMode) =>
       secondary: colors.secondary,
       background: mode === "dark" ? colors.darkMode.background : colors.lightMode.background,
       text: mode === "dark" ? colors.darkMode.text : colors.lightMode.text,
-    },
+    }
   });

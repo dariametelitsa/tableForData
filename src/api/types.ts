@@ -3,7 +3,7 @@ import { Nullable } from '../shared/types.ts';
 export type CharacterDTO = {
   "id": number,
   "name": string,
-  "status": string,
+  "status": 'Alive' | 'Dead' | 'unknown',
   "species": string
   "type": string
   "gender": 'Female' | 'Male' | 'Genderless' | 'unknown'
