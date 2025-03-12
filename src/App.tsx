@@ -1,31 +1,17 @@
-import { Button, CssBaseline, ThemeProvider } from '@mui/material';
-import { useMemo, useState } from 'react';
-import { ThemeMode } from './shared/types.ts';
-import { getTheme } from './shared/themeColors.ts';
+import { Box } from '@mui/material';
 import Layout from './components/layout/Layout.tsx';
+import { ThemeProvider } from './hooks/useTheme.tsx';
 
 function App() {
-  const [mode, setMode] = useState<ThemeMode>("light");
-
-  const theme = useMemo(() => getTheme(mode), [mode]);
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+      <ThemeProvider>
         <Layout>
-          <div>
-            <Button
-              variant="contained"
-              onClick={() => setMode(mode === "light" ? "dark" : "light")}
-            >
-              Переключить тему
-            </Button>
+          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
             <h1>Vite + React</h1>
-          </div>
+          </Box>
         </Layout>
       </ThemeProvider>
-    </>
   )
 }
 

@@ -1,21 +1,14 @@
-import { AppBar, Box, Container, CssBaseline, Toolbar, Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import * as React from 'react';
+import { Header } from '../header/Header.tsx';
 
 const Layout = ({ children }: {children: React.ReactNode}) => {
   return (
     <>
-    <AppBar position="static" sx={{width: '100%'}}>
-      <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Table info sfdjdnsk skkn kskj kjk jkjkh kl sdnkdjnjkdn knkjn kjnk k
-        </Typography>
-      </Toolbar>
-    </AppBar>
-    <Box display="flex" minHeight="100vh" maxWidth='1536px' sx={{margin: "0 auto", paddingX: '20px', flexDirection: 'column', alignItems: 'center'}}>
-      <Container sx={{ mt: 4 }}>
+      <Header/>
+      <Container sx={{ mt: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         {children}
       </Container>
-    </Box>
     </>
   );
 };
