@@ -60,7 +60,7 @@ export const Table = () => {
         <img
           src={params.value as string}
           alt="Character"
-          style={{ width: '100px', height: 'auto', cursor: 'pointer' }}
+          style={{ width: '90px', height: 'auto', cursor: 'pointer' }}
           onClick={() => handleImageClick(params.value as string)}
         />
       ),
