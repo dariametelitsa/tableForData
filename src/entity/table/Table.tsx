@@ -1,46 +1,24 @@
-import { useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
-import { DataGrid, GridCellParams, GridFilterModel, GridSortModel, GridToolbar } from '@mui/x-data-grid';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { DataGrid, GridCellParams, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { Modal } from '@components/modal/Modal.tsx';
-import { getFromLocalStorage, removeFromLocalStorage, setToLocalStorage } from '@shared/localStorage.ts';
-import { useCharacters } from '@/entity/table/useCharacters.ts';
-
+import { useTable } from '@/entity/table/useTable.ts';
 export const Table = () => {
 
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedImage, setSelectedImage] = useState<string>('');
-  const sortFromStorage = getFromLocalStorage('sort')
-  const filterFromStorage = getFromLocalStorage('filter')
-  const {characterList, isLoading, error} = useCharacters()
+  const {onResetSettings, onFilterChange, onSortChange, handleCloseModal, handleImageClick, rows,
+    sortModel, filterModel, isLoading, selectedImage, openModal, characterList} = useTable()
 
-  const sortData = sortFromStorage
-    ? JSON.parse(sortFromStorage)
-    : [{
-        field: 'id',
-        sort: 'asc',
-      }]
-
-  const filterData = filterFromStorage
-    ? JSON.parse(filterFromStorage)
-    : { items: [] }
-
-  const [sortModel, setSortModel] = useState<GridSortModel>(sortData);
-  const [filterModel, setFilterModel] = useState<GridFilterModel>(filterData);
-
+  console.log(characterList);
   if (isLoading) {
-    return <Typography variant="h6">Loading...</Typography>
+    return <CircularProgress color="success" />
   }
 
   if(!characterList) {
     return <Typography variant="h6">Empty data</Typography>
   }
 
-  if(error) {
-    return <Typography variant="h6">Error in fetching data, try again</Typography>
-  }
-
-  const columns = [
+  const columns: GridColDef[] = [
     { field: 'id',
+      type: 'number',
       headerName: 'ID',
       width: 90,
       sortable: true,
@@ -54,8 +32,11 @@ export const Table = () => {
     },
     {
       field: 'image',
+      type: 'string',
       headerName: 'Image',
       width: 150,
+      sortable: false,
+      filterable: false,
       renderCell: (params: GridCellParams) => (
         <img
           src={params.value as string}
@@ -68,6 +49,7 @@ export const Table = () => {
     {
       field: 'name',
       headerName: 'Name',
+      type: 'string',
       width: 200,
       sortable: true,
       filterable: true,
@@ -82,6 +64,7 @@ export const Table = () => {
     {
       field: 'status',
       headerName: 'Status',
+      type: 'string',
       width: 150,
       filterable: true,
       renderCell: (params: GridCellParams) => (
@@ -95,9 +78,11 @@ export const Table = () => {
     {
       field: 'created',
       headerName: 'Created',
+      type: 'date',
       width: 200,
       sortable: true,
-      renderCell: (params: GridCellParams ) => (
+      valueGetter: (params: string) => new Date(params),
+      renderCell: (params: GridCellParams) => (
         <Typography
           color={'textDisabled'}
           sx={{ fontStyle: 'italic' }}>
@@ -108,6 +93,7 @@ export const Table = () => {
     {
       field: 'episodeCount',
       headerName: 'Episodes Count',
+      type: 'number',
       width: 180,
       sortable: true,
       renderCell: (params: GridCellParams) => (
@@ -119,42 +105,6 @@ export const Table = () => {
       ),
     },
   ];
-
-  const rows = characterList.map((character) => ({
-    id: character.id,
-    image: character.image,
-    name: character.name,
-    status: character.status,
-    created: character.created,
-    episodeCount: character.episode.length,
-  }));
-
-  const handleImageClick = (imageUrl: string) => {
-    setSelectedImage(imageUrl);
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-    setSelectedImage('');
-  };
-
-  const onSortChange = (newSortModel: GridSortModel) => {
-    setToLocalStorage('sort', JSON.stringify(newSortModel))
-    setSortModel(newSortModel)
-  }
-
-  const onFilterChange = (newFilterModel: GridFilterModel) => {
-    setToLocalStorage('filter', JSON.stringify(newFilterModel))
-    setFilterModel(newFilterModel)
-  }
-
-  const onResetSettings = () => {
-    removeFromLocalStorage('filter')
-    removeFromLocalStorage('sort')
-    setSortModel([])
-    setFilterModel({items: []})
-  }
 
   return (
     <Box sx={{ width: '100%', marginTop: 2 }}>
@@ -171,7 +121,6 @@ export const Table = () => {
         slots={{
           toolbar: GridToolbar,
         }}
-        checkboxSelection
         sx={{
           '.MuiDataGrid-cell': {
             maxHeight: '300px',
