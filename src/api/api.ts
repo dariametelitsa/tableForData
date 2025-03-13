@@ -40,7 +40,7 @@ export const apiData = {
 
   getCharacter: (id: number) => {
     return queryOptions({
-      queryKey: [apiData.baseKey, 'character'],
+      queryKey: [apiData.baseKey, 'character', `character-${id}`],
       queryFn: async (meta): Promise<CharacterDTO> => {
         const response = await fetch(`${apiData.baseKey}/character/${id}`, {
           signal: meta.signal,
