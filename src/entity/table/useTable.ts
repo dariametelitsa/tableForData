@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { getFromLocalStorage, removeFromLocalStorage, setToLocalStorage } from '@shared/localStorage.ts';
 import { useCharacterList } from '@/entity/table/useCharacterList.ts';
-import { GridFilterModel, GridSortModel } from '@mui/x-data-grid';
+import { GridFilterModel, GridRowParams, GridSortModel } from '@mui/x-data-grid';
 import { Nullable } from '@shared/types.ts';
 
 export const useTable = () => {
-  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openModalCharacter, setOpenModalCharacter] = useState<boolean>(false);
+  const [openModalImage, setOpenModalImage] = useState<boolean>(false);
   const [selectedCharacter, setSelectedCharacter] = useState<Nullable<number>>(null);
+  const [selectedImage, setSelectedImage] = useState<string>('');
   const sortFromStorage = getFromLocalStorage('sort')
   const filterFromStorage = getFromLocalStorage('filter')
   const {characterList, isLoading} = useCharacterList()
@@ -35,13 +37,19 @@ export const useTable = () => {
     episodeCount: character.episode.length,
   }));
 
-  const onImageClick = (id: number) => {
-    setSelectedCharacter(id);
-    setOpenModal(true);
+  const onRowClick = (params: GridRowParams) => {
+    setSelectedCharacter(params.row.id);
+    setOpenModalCharacter(true);
+  };
+
+  const onImageClick = (src: string) => {
+    setSelectedImage(src);
+    setOpenModalImage(true);
   };
 
   const onCloseModal = () => {
-    setOpenModal(false);
+    setOpenModalCharacter(false);
+    setOpenModalImage(false);
     setSelectedCharacter(null);
   };
 
@@ -67,13 +75,16 @@ export const useTable = () => {
     onFilterChange,
     onSortChange,
     onCloseModal,
-    onImageClick,
+    onRowClick,
     rows,
     sortModel,
     filterModel,
     isLoading,
     selectedCharacter,
-    openModal,
-    characterList
+    openModalCharacter,
+    openModalImage,
+    characterList,
+    selectedImage,
+    onImageClick
   }
 }

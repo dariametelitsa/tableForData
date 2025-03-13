@@ -1,16 +1,17 @@
 import { Box, Button, CircularProgress, Tooltip, Typography } from '@mui/material';
 import { DataGrid, GridCellParams, GridColDef, GridToolbar } from '@mui/x-data-grid';
-import { Modal } from '@components/modal/Modal.tsx';
-import { useTable } from '@/entity/table/useTable.ts';
+import { useTable } from './useTable.ts';
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
 import TransgenderIcon from '@mui/icons-material/Transgender';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import { CharacterModal } from '@/entity/characterModal';
+import { ImageModal } from '@/entity/imageModal';
 
 const Table = () => {
 
-  const {onResetSettings, onFilterChange, onSortChange, onCloseModal, onImageClick, rows,
-    sortModel, filterModel, isLoading, selectedCharacter, openModal, characterList} = useTable()
+  const {onResetSettings, onFilterChange, onSortChange, onCloseModal, onRowClick, rows,
+    sortModel, filterModel, isLoading, selectedCharacter, openModalCharacter, openModalImage, characterList, onImageClick, selectedImage} = useTable()
 
   if (isLoading) {
     return <CircularProgress color="success" />
@@ -42,13 +43,15 @@ const Table = () => {
       sortable: false,
       filterable: false,
       renderCell: (params: GridCellParams) => {
-        const id = params.row.id
         return(
           <img
             src={params.value as string}
             alt="Character"
             style={{ width: '90px', height: 'auto', cursor: 'pointer' }}
-            onClick={() => onImageClick(id)}
+            onClick={(e) => {
+              e.stopPropagation()
+              onImageClick(params.value as string);
+            }}
           />
         );
       },
@@ -149,6 +152,7 @@ const Table = () => {
 
       <DataGrid
         rows={rows}
+        onRowClick={onRowClick}
         columns={[...columns]}
         getRowHeight={() => 'auto'}
         getEstimatedRowHeight={() => 300}
@@ -171,7 +175,8 @@ const Table = () => {
         filterModel={filterModel}
         onFilterModelChange={onFilterChange}
       />
-      {selectedCharacter && <Modal onCloseModal={onCloseModal} openModal={openModal} selectedCharacter={selectedCharacter} />}
+      {selectedImage && <ImageModal openModal={openModalImage} onCloseModal={onCloseModal} selectedImage={selectedImage}/>}
+      {selectedCharacter && <CharacterModal onCloseModal={onCloseModal} openModal={openModalCharacter} selectedCharacter={selectedCharacter} />}
     </Box>
   )
 }

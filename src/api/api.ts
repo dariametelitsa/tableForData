@@ -5,22 +5,6 @@ import { queryOptions } from '@tanstack/react-query';
 export const apiData = {
   baseKey: 'https://rickandmortyapi.com/api',
 
-  getCharacterList: (page: number = 1) => {
-    return queryOptions({
-      queryKey: [apiData.baseKey, 'characters', page],
-      queryFn: async (meta): Promise<CharacterListResponse> => {
-        const response = await fetch(`${apiData.baseKey}/character?page=${page}`, {
-          signal: meta.signal,
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch characters');
-        }
-        return await response.json();
-      },
-    });
-  },
-
   async getMoreCharacterList (): Promise<CharacterDTO[]> {
     const allCharacters: CharacterDTO[] = [];
     let currentPage = 1;
