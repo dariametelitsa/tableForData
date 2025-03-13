@@ -141,7 +141,7 @@ const Table = () => {
   ];
 
   return (
-    <Box sx={{ width: '100%', marginTop: 2 }}>
+    <Box sx={{ width: '100%', marginTop: 2, marginBottom: 4 }}>
       <Typography variant="h4" gutterBottom>
         Character List
       </Typography>
