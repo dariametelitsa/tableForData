@@ -76,9 +76,6 @@ The app will be available at http://localhost:5173 (or another port specified in
 1. **Sorting and Filtering**: Implemented via DataGrid for efficient data handling. Filtering by field type.
 2. **Data Caching**: TanStack Query optimizes API requests and reduces load times.
 
-## Demo
-
-Check out the live demo here: https://dariametelitsa.github.io/tableForData.
 
 ### Usage Example
 

@@ -66,7 +66,7 @@ const Table = () => {
       renderCell: (params: GridCellParams) => (
         <Typography
           color={'info'}
-          sx={{ fontFamily: 'Arial', fontWeight: 'bold' }}>
+          sx={{ fontFamily: 'Arial', fontWeight: 'bold'}}>
           {params.value as string}
         </Typography>
       ),
@@ -164,7 +164,7 @@ const Table = () => {
           '.MuiDataGrid-cell': {
             maxHeight: '300px',
             minHeight: '100px',
-            overflow: 'scroll',
+            overflow: 'hidden',
             height: 'auto',
             display: 'flex',
             alignItems: 'center',
