@@ -51,7 +51,6 @@ export const Modal = ({openModal, onCloseModal, selectedCharacter}: Props) => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "50%",
-            height: "46%",
             backgroundColor: theme.palette.background.default,
             boxShadow: 24,
             p: 4,
