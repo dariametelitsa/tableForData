@@ -38,7 +38,7 @@ export const apiData = {
     return allCharacters;
   },
 
-  getCharacter: (id: string) => {
+  getCharacter: (id: number) => {
     return queryOptions({
       queryKey: [apiData.baseKey, 'character'],
       queryFn: async (meta): Promise<CharacterDTO> => {

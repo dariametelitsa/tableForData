@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { apiData } from '@/api/api.ts';
 
-export const useCharacters = () => {
+export const useCharacterList = () => {
   const {
     error,
     data: characterList,

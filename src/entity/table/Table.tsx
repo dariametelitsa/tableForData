@@ -9,8 +9,8 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 const Table = () => {
 
-  const {onResetSettings, onFilterChange, onSortChange, handleCloseModal, handleImageClick, rows,
-    sortModel, filterModel, isLoading, selectedImage, openModal, characterList} = useTable()
+  const {onResetSettings, onFilterChange, onSortChange, onCloseModal, onImageClick, rows,
+    sortModel, filterModel, isLoading, selectedCharacter, openModal, characterList} = useTable()
 
   if (isLoading) {
     return <CircularProgress color="success" />
@@ -24,7 +24,7 @@ const Table = () => {
     { field: 'id',
       type: 'number',
       headerName: 'ID',
-      width: 50,
+      width: 70,
       sortable: true,
       renderCell: (params: GridCellParams) => (
         <Typography
@@ -41,14 +41,17 @@ const Table = () => {
       width: 150,
       sortable: false,
       filterable: false,
-      renderCell: (params: GridCellParams) => (
-        <img
-          src={params.value as string}
-          alt="Character"
-          style={{ width: '90px', height: 'auto', cursor: 'pointer' }}
-          onClick={() => handleImageClick(params.value as string)}
-        />
-      ),
+      renderCell: (params: GridCellParams) => {
+        const id = params.row.id
+        return(
+          <img
+            src={params.value as string}
+            alt="Character"
+            style={{ width: '90px', height: 'auto', cursor: 'pointer' }}
+            onClick={() => onImageClick(id)}
+          />
+        );
+      },
     },
     {
       field: 'name',
@@ -81,7 +84,6 @@ const Table = () => {
               : params.value === 'Genderless'
             ? <TransgenderIcon/>
                 : <QuestionMarkIcon/>
-
           }
         </>
       ),
@@ -169,7 +171,7 @@ const Table = () => {
         filterModel={filterModel}
         onFilterModelChange={onFilterChange}
       />
-        <Modal handleCloseModal={handleCloseModal} openModal={openModal} selectedImage={selectedImage} />
+      {selectedCharacter && <Modal onCloseModal={onCloseModal} openModal={openModal} selectedCharacter={selectedCharacter} />}
     </Box>
   )
 }

@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { getFromLocalStorage, removeFromLocalStorage, setToLocalStorage } from '@shared/localStorage.ts';
-import { useCharacters } from '@/entity/table/useCharacters.ts';
+import { useCharacterList } from '@/entity/table/useCharacterList.ts';
 import { GridFilterModel, GridSortModel } from '@mui/x-data-grid';
+import { Nullable } from '@shared/types.ts';
 
 export const useTable = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [selectedCharacter, setSelectedCharacter] = useState<Nullable<number>>(null);
   const sortFromStorage = getFromLocalStorage('sort')
   const filterFromStorage = getFromLocalStorage('filter')
-  const {characterList, isLoading} = useCharacters()
+  const {characterList, isLoading} = useCharacterList()
 
   const sortData = sortFromStorage
     ? JSON.parse(sortFromStorage)
@@ -34,14 +35,14 @@ export const useTable = () => {
     episodeCount: character.episode.length,
   }));
 
-  const handleImageClick = (imageUrl: string) => {
-    setSelectedImage(imageUrl);
+  const onImageClick = (id: number) => {
+    setSelectedCharacter(id);
     setOpenModal(true);
   };
 
-  const handleCloseModal = () => {
+  const onCloseModal = () => {
     setOpenModal(false);
-    setSelectedImage('');
+    setSelectedCharacter(null);
   };
 
   const onSortChange = (newSortModel: GridSortModel) => {
@@ -65,13 +66,13 @@ export const useTable = () => {
     onResetSettings,
     onFilterChange,
     onSortChange,
-    handleCloseModal,
-    handleImageClick,
+    onCloseModal,
+    onImageClick,
     rows,
     sortModel,
     filterModel,
     isLoading,
-    selectedImage,
+    selectedCharacter,
     openModal,
     characterList
   }
