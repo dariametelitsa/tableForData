@@ -1,6 +1,6 @@
 import {
   Backdrop,
-  Box,
+  Box, Divider,
   Fade,
   Grid2,
   IconButton,
@@ -63,10 +63,11 @@ export const Modal = ({openModal, onCloseModal, selectedCharacter}: Props) => {
             <CloseIcon />
           </IconButton>
 
-          <Typography variant="h3" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             {character.name}
           </Typography>
-          <Grid2 container spacing={2} sx={{ height: "100%" }}>
+          <Divider />
+          <Grid2 container spacing={2} sx={{ height: "100%", mt: 2 }}>
             <Grid2 component="div">
               <img
                 src={character.image}

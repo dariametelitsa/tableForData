@@ -68,17 +68,18 @@ The app will be available at http://localhost:5173 (or another port specified in
 
 **Data Table**: Uses MUI’s DataGrid component with sorting and filtering support.
 
-**Modal Windows**: Clicking a character’s image opens a modal with an enlarged version.
+**Modal Windows**: Clicking a character’s image opens a modal with an enlarged version and additional data.
 
 
 ## Additional Features
 
-1. **Sorting and Filtering**: Implemented via DataGrid for efficient data handling.
+1. **Sorting and Filtering**: Implemented via DataGrid for efficient data handling. Filtering by field type.
 2. **Data Caching**: TanStack Query optimizes API requests and reduces load times.
 
 ## Demo
 
-Check out the live demo here: <demo_url>.
+Check out the live demo here: https://dariametelitsa.github.io/tableForData.
+
 ### Usage Example
 
 Open the app in your browser.

@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Tooltip, Typography } from '@mui/material';
 import { DataGrid, GridCellParams, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import { Modal } from '@components/modal/Modal.tsx';
 import { useTable } from '@/entity/table/useTable.ts';
@@ -76,7 +76,7 @@ const Table = () => {
       width: 100,
       filterable: true,
       renderCell: (params: GridCellParams) => (
-        <>
+        <Tooltip title={params.value as string}>
           {params.value === 'Female'
             ? <FemaleIcon/>
             : params.value === 'Male'
@@ -85,7 +85,7 @@ const Table = () => {
             ? <TransgenderIcon/>
                 : <QuestionMarkIcon/>
           }
-        </>
+        </Tooltip>
       ),
     },
     {
